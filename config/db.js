@@ -3,12 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const URI = ""
+const URI = process.env.URI
 
 const options = {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
     useUnifiedTopology: true,
 }
 
