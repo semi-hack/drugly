@@ -30,7 +30,6 @@ const UserSchema = new Schema({
     },
     gender: {
         type: String,
-        required: true,
     },
     blood_group: {
         type: String,
@@ -41,7 +40,7 @@ const UserSchema = new Schema({
     health_status: {
         type: String
     },
-    cart: [{type: Schema.Types.ObjectId, ref: 'Product'}],
+    orders: [{type: Schema.Types.ObjectId, ref: 'Order'}],
     referral_code: {
         type: String
     },
