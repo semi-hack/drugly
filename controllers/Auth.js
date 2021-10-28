@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
 
 const secret = "eggs"
 
@@ -21,7 +22,7 @@ const login = async (req, res) => {
         }
       });
   
-      const token = jwt.sign({ _id: user._id }, secret, { expiresIn: '20h' });
+      const token = jwt.sign({ _id: user._id }, secret, { expiresIn: '10h' });
 
       return res.json({
         success: true,

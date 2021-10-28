@@ -12,6 +12,7 @@
   "author": "semi",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "debug": "^2.6.9",
     "dotenv": "^10.0.0",
