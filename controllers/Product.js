@@ -47,4 +47,54 @@ const getAllProducts = async (req, res) => {
     }
 }
 
-export default { addProduct, getAllProducts }
+const getProductById = async(req, res) => {
+    try {
+        const product = await Product.findOne({ _id: req.query._id }).exec()
+
+        if(!product) {
+            return res.status(400).json({
+                success: false,
+                data: "could not get product"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: product
+        });
+    } catch (error) {
+        return res.status(500).json({
+            err: "error",
+            success: false,
+        })
+    }
+}
+
+const getProductByCategory = async(req, res) => {
+
+}
+
+const getProductByName = async (req, res) => {
+    try {
+        const product = await Product.findOne({ name: req.query.name }).exec()
+
+        if(!product) {
+            return res.status(400).json({
+                success: false,
+                data: "could not get product"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: product
+        });
+    } catch (error) {
+        return res.status(500).json({
+            err: "error",
+            success: false,
+        })
+    }
+}
+
+export default { addProduct, getAllProducts, getProductById, getProductByName }

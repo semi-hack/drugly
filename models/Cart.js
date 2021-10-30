@@ -2,14 +2,13 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 
-const CartSchema = new Schema({
-    userId: {},
+const ItemSchema = new Schema({
     product: [{}],
 
 },  
  { timestamps: true }
 )
 
-const Cart = mongoose.model('Cart', CartSchema);
+const Cart = mongoose.model('Item', ItemSchema);
 
 export default Cart;

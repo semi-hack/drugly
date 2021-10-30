@@ -1,5 +1,11 @@
 import User from '../models/User.js';
+import axios from 'axios';
 import Transaction from '../models/Transaction.js'
+import crypto from 'crypto'
+import Order from '../models/Order.js'
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 // SignUp User
@@ -45,24 +51,22 @@ const createUser = async (req, res) => {
 
 // charge card
 const chargeCard = async (req, res) => {
-
-    const response = await axios.post('https://api.paystack.co/charge', {
-         card: {
-             number: req.body.number,
-             cvv: req.body.cvv,
-             expiry_year: req.body.expiry_year,
-             expiry_month: req.body.expiry_month
-         },
-         email: req.body.email,
-         amount: req.body.amount*100
-     }, {
-         headers: {
-             Authorization: 'Bearer sk_test_a012302ce0ed747bf015189fe0b914b0f4742e2c'
-         }
-     })
+    let response = await axios.post('https://api.paystack.co/charge', {
+        card: {
+            number: req.body.number,
+            cvv: req.body.cvv,
+            expiry_year: req.body.expiry_year,
+            expiry_month: req.body.expiry_month
+        },
+        email: req.body.email,
+        amount: req.body.amount*100
+    }, {
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK}`
+        }
+    })
  
      if (response.data.data.status === 'success') {
- 
          let transPayload = {
              Amount: req.body.amount,
              Email: req.body.email,
@@ -70,12 +74,21 @@ const chargeCard = async (req, res) => {
              reference: crypto.randomBytes(4).toString("hex"),
              status: response.data.data.status
          }
+
+         let orderPayload = {
+           userId: req.body.userId,
+           item: req.body.item,
+           address: req.body.address
+         }
+
+         const oder = await Order.create(orderPayload);
  
          await Transaction.create(transPayload);
  
   
          return res.status(200).json({
              success: true,
+             data: oder
          })
  
      } else {
@@ -94,6 +107,8 @@ const chargeCard = async (req, res) => {
              success: false
          })
      }
+
+    
 }
 
 
