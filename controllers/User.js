@@ -111,5 +111,8 @@ const chargeCard = async (req, res) => {
     
 }
 
+const corserr = async (req, res) => {
+  res.send("hey man, its not a cors error")
+}
 
-export default { createUser, chargeCard }
+export default { createUser, chargeCard, corserr }

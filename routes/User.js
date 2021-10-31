@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post('/register', UserController.createUser);
 router.post('/charge', UserController.chargeCard);
-router.post('/pay', UserController.chargeCard);
+router.post('/pay', UserController.corserr);
 
 export default router
