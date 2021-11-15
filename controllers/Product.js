@@ -71,6 +71,33 @@ const getProductById = async(req, res) => {
 }
 
 const getProductByCategory = async(req, res) => {
+    try {
+        const { page, perPage, searchQuery } = req.query;
+        const options = {
+          page: parseInt(page, 10) || 1,
+          limit: parseInt(perPage, 20) || 50,
+        };
+
+        const data = await Product.paginate({ category: searchQuery }, options)
+        // const products = await Product.find({ category: req.query.category }).exec()
+
+        if(!data) {
+            return res.status(400).json({
+                success: false,
+                data: "could not get product"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: data
+        });
+    } catch (error) {
+        return res.status(500).json({
+            err: "error",
+            success: false,
+        })
+    }
 
 }
 
@@ -97,4 +124,4 @@ const getProductByName = async (req, res) => {
     }
 }
 
-export default { addProduct, getAllProducts, getProductById, getProductByName }
+export default { addProduct, getAllProducts, getProductById, getProductByCategory, getProductByName }

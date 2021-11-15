@@ -81,14 +81,16 @@ const chargeCard = async (req, res) => {
            address: req.body.address
          }
 
-         const oder = await Order.create(orderPayload);
+         const user_order = await Order.create(orderPayload);
+
+         const returned_user = await User.findOneAndUpdate({ _id: req.body.userId}, {$push: { orders: user_order}}, { new: true})
  
          await Transaction.create(transPayload);
  
   
          return res.status(200).json({
              success: true,
-             data: oder
+             data: returned_user
          })
  
      } else {
