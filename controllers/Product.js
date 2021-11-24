@@ -31,7 +31,7 @@ const getAllProducts = async (req, res) => {
           limit: parseInt(perPage, 20) || 50,
         };
 
-        const products =  await Product.paginate({}, options).exec()
+        const products =  await Product.paginate(searchQuery, options)
 
         if(!products) {
             return res.status(400).json({
