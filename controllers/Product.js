@@ -25,7 +25,13 @@ const addProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        const products =  await Product.find({}).exec()
+        const { page, perPage, searchQuery } = req.query;
+        const options = {
+          page: parseInt(page, 10) || 1,
+          limit: parseInt(perPage, 20) || 50,
+        };
+
+        const products =  await Product.paginate({}, options).exec()
 
         if(!products) {
             return res.status(400).json({
