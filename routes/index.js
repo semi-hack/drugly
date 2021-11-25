@@ -1,6 +1,7 @@
 import express from 'express';
 import userRoute from './User.js';
 import prodRoute from './Product.js';
+import revRoute from './Review.js';
 import authRoute from './Auth.js';
 
 const router = express.Router();
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
 
 router.use('/v1', authRoute)
 router.use('/v1', userRoute)
+router.use('/v1', revRoute);
 router.use('/v1', prodRoute)
 
 export default router

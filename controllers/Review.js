@@ -43,5 +43,29 @@ const addReview = async (req, res) => {
   }
 };
 
+const getUserReview = async (req, res) => {
 
-export default { addReview }
+    try {
+        const data = await Review.find({ user: req.body.user}).exec()
+
+        if (!data) {
+            return res.status(400).json({
+              message: "error finding reviews",
+            });
+        }
+      
+        return res.json({
+            success: true,
+            data: data,
+        });
+    } catch (error) {
+        return res.status(500).json({
+          error: "There was an error.",
+          success: false,
+        });
+    }
+   
+}
+
+
+export default { addReview, getUserReview }
