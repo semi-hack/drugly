@@ -7,5 +7,6 @@ router.get('/user', UserController.getUser)
 router.patch('/save', UserController.saveItem);
 router.post('/charge', UserController.chargeCard);
 router.post('/pay', UserController.corserr);
+router.delete('/save', UserController.deleteSavedItem);
 
 export default router

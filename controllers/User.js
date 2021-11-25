@@ -94,6 +94,30 @@ const saveItem = async (req, res) => {
   }
 }
 
+// delete saved item
+const deleteSavedItem = async (req, res) => {
+  try {
+    let user = await User.findOneAndUpdate({_id: req.body._id}, {$pull: {saved: req.body.item}}, {new: true}).populate('saved')
+
+    if(!user) {
+      return res.status(409).json({
+        error: "User not found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "server error",
+      success: false,
+    })
+  }
+}
+
 // charge card
 const chargeCard = async (req, res) => {
   let response = await axios.post('https://api.paystack.co/charge', {
@@ -162,4 +186,4 @@ const corserr = async (req, res) => {
   res.send("hey man, its not a cors error")
 }
 
-export default { createUser, saveItem, getUser, chargeCard, corserr }
+export default { createUser, saveItem, deleteSavedItem, getUser, chargeCard, corserr }
