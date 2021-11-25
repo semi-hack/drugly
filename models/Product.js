@@ -23,12 +23,13 @@ const ProductSchema = new Schema({
     },
     quantity: {
         type: Number,
-        default: 1
+        default: 0
     },
     price: {
         type: Number,
         default: 1000
-    }
+    },
+    review: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 
 },  
  { timestamps: true }

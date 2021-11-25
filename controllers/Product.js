@@ -7,6 +7,7 @@ const addProduct = async (req, res) => {
         const drug = await Product.create({
             name: req.body.name,
             brand: req.body.brand,
+            category: req.body.category,
             description: req.body.description,
         })
 

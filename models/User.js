@@ -44,7 +44,7 @@ const UserSchema = new Schema({
     referral_code: {
         type: String
     },
-    
+    saved: [{ type: Schema.Types.ObjectId, ref: 'Product'}],
     resetToken: {
         type: String,
         default: ''

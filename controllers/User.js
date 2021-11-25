@@ -70,7 +70,29 @@ const getUser = async (req, res) => {
   }
 }
 
-// Add to Cart
+// Save Item
+const saveItem = async (req, res) => {
+  try {
+    let user = await User.findOneAndUpdate({ _id: req.body._id}, {$push: { saved: req.body.item}}, {new: true}).populate('saved')
+
+    if(!user) {
+      return res.status(409).json({
+        error: "User not found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "server error",
+      success: false,
+    })
+  }
+}
 
 // charge card
 const chargeCard = async (req, res) => {
@@ -140,4 +162,4 @@ const corserr = async (req, res) => {
   res.send("hey man, its not a cors error")
 }
 
-export default { createUser, getUser, chargeCard, corserr }
+export default { createUser, saveItem, getUser, chargeCard, corserr }
