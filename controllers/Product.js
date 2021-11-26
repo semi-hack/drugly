@@ -99,7 +99,7 @@ const getProduct = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-  let idToSearch = mongoose.Types.ObjectId(req.body._id)
+  let idToSearch = mongoose.Types.ObjectId(req.query._id)
 
   try {
     const product = await Product.aggregate([
