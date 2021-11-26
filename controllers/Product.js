@@ -99,8 +99,22 @@ const getProduct = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
+  let idToSearch = mongoose.Types.ObjectId(req.body._id)
+
   try {
-    const product = await Product.findOne({ _id: req.query._id }).exec();
+    const product = await Product.aggregate([
+      { $match: { _id: idToSearch } },
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "review",
+          foreignField: "_id",
+          as: "review",
+        },
+      },
+      { $addFields: { average: { $avg: "$review.rating" } } },
+    ]);
+    // const product = await Product.findOne({ _id: req.query._id }).exec();
 
     if (!product) {
       return res.status(400).json({

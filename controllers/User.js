@@ -50,9 +50,9 @@ const createUser = async (req, res) => {
 // get user
 const getUser = async (req, res) => {
   try {
-    let user = await User.findOne({ _id: req.body._id }).populate('orders');
+    let user = await User.findOne({ _id: req.query._id }).populate('orders');
     if (!user) {
-      return res.status(409).json({
+      return res.status(404).json({
         error: "User not found",
         success: false,
       });
