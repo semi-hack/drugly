@@ -4,6 +4,7 @@ import Transaction from '../models/Transaction.js'
 import crypto from 'crypto'
 import Order from '../models/Order.js'
 import dotenv from 'dotenv';
+import { INSPECT_MAX_BYTES } from 'buffer';
 
 dotenv.config();
 
@@ -50,7 +51,13 @@ const createUser = async (req, res) => {
 // get user
 const getUser = async (req, res) => {
   try {
-    let user = await User.findOne({ _id: req.query._id }).populate('orders');
+    let user = await User.findOne({ _id: req.query._id }).populate({
+      path: 'orders',
+      populate: {
+        path: 'item.productId',
+        model: 'Product'
+      }
+    });
     if (!user) {
       return res.status(404).json({
         error: "User not found",

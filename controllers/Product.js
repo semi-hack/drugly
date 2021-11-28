@@ -125,7 +125,7 @@ const getProductById = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      data: product,
+      data: product[0],
     });
   } catch (error) {
     return res.status(500).json({
