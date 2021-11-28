@@ -4,7 +4,6 @@ import ProdController from '../controllers/Product.js';
 const router = express.Router();
 
 router.post('/add', ProdController.addProduct);
-router.get('/product', ProdController.getProduct);
 router.get('/product/id', ProdController.getProductById);
 router.get('/product', ProdController.getProductByCategory);
 router.get('/product/:name', ProdController.getProductByName);
